@@ -1,14 +1,13 @@
 /** @format */
 
 import express from 'express';
-import uploadRouter from './routes/upload.route.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import kafkaPublisherRouter from './routes/kafkapublisher.route.js';
+import KafkaConfig from './kafka/kafka.js';
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
 
 app.use(
 	cors({
@@ -17,11 +16,14 @@ app.use(
 	})
 );
 app.use(express.json());
-app.use('/upload', uploadRouter);
-app.use('/publish', kafkaPublisherRouter);
 
 app.get('/', (req, res) => {
-	res.send('HHLD YouTube');
+	res.send('HHLD YouTube TRANSCODER service');
+});
+
+const kafkaconfig = new KafkaConfig();
+kafkaconfig.consume('transcode', (value) => {
+	console.log('got data from kafka : ', value);
 });
 
 app.listen(port, () => {
