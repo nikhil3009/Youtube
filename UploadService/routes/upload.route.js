@@ -19,5 +19,4 @@ router.post('/', upload.single('chunk'), uploadChunk);
 
 // Route for completing the upload
 router.post('/complete', completeUpload);
-
 export default router;

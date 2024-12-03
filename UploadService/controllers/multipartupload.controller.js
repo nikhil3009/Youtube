@@ -1,6 +1,7 @@
 /** @format */
 
 import AWS from 'aws-sdk';
+import { addVideoDetailsToDB } from '../db/db.js';
 
 // Initialize upload
 export const initializeUpload = async (req, res) => {
@@ -67,7 +68,8 @@ export const uploadChunk = async (req, res) => {
 export const completeUpload = async (req, res) => {
 	try {
 		console.log('Completing Upload');
-		const { filename, totalChunks, uploadId } = req.body;
+		const { filename, totalChunks, uploadId, title, description, author } =
+			req.body;
 		const uploadedParts = [];
 
 		// Build uploadedParts array from request body
@@ -106,6 +108,12 @@ export const completeUpload = async (req, res) => {
 			.promise();
 
 		console.log('data----- ', uploadResult);
+		console.log('Updating data in DB');
+
+		const url = uploadResult.Location;
+		console.log('Video uploaded at ', url);
+
+		await addVideoDetailsToDB(title, description, author, url);
 		return res.status(200).json({ message: 'Uploaded successfully!!!' });
 	} catch (error) {
 		console.log('Error completing upload :', error);
