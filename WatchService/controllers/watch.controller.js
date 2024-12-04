@@ -30,6 +30,7 @@ const watchVideo = async (req, res) => {
 	try {
 		const videoKey = req.query.key; // Key of the video file in S3
 		const signedUrl = await generateSignedUrl(videoKey);
+		console.log('here is the signedURL', signedUrl);
 		res.json({ signedUrl });
 	} catch (err) {
 		console.error('Error generating pre-signed URL:', err);
