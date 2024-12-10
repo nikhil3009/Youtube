@@ -15,7 +15,7 @@ const s3 = new AWS.S3({
 	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
-const mp4FileName = 'trial2.mp4';
+const mp4FileName = 'test.mp4';
 const bucketName = process.env.AWS_BUCKET;
 const hlsFolder = 'hls';
 

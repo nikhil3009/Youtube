@@ -2,6 +2,7 @@
 
 import AWS from 'aws-sdk';
 import { addVideoDetailsToDB } from '../db/db.js';
+import { pushVideoForEncodingToKafka } from './kafkapublisher.controller.js';
 
 // Initialize upload
 export const initializeUpload = async (req, res) => {

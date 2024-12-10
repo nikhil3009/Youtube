@@ -1,7 +1,7 @@
 /** @format */
 
 import Room from './pages/Room';
-import UploadForm from './components/UploadForm';
+import UploadForm from './upload/page';
 import AuthPage from './pages/AuthPage';
 import YouTubeHome from './pages/youtubeHome';
 
