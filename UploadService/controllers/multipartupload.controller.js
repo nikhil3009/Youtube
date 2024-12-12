@@ -3,6 +3,7 @@
 import AWS from 'aws-sdk';
 import { addVideoDetailsToDB } from '../db/db.js';
 import { pushVideoForEncodingToKafka } from './kafkapublisher.controller.js';
+import PushToOpenSearch from '../opensearch/pushToOpenSearch.js';
 
 // Initialize upload
 export const initializeUpload = async (req, res) => {
@@ -115,7 +116,8 @@ export const completeUpload = async (req, res) => {
 		console.log('Video uploaded at ', url);
 
 		await addVideoDetailsToDB(title, description, author, url);
-		pushVideoForEncodingToKafka(title, uploadResult.Location);
+		pushVideoForEncodingToKafka(title, filename);
+		PushToOpenSearch(title, description, author, url);
 		return res.status(200).json({ message: 'Uploaded successfully!!!' });
 	} catch (error) {
 		console.log('Error completing upload :', error);

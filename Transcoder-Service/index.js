@@ -4,6 +4,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import KafkaConfig from './kafka/kafka.js';
+import s3ToS3 from './hls/s3tos3.js';
 
 dotenv.config();
 const app = express();
@@ -22,8 +23,24 @@ app.get('/', (req, res) => {
 });
 
 const kafkaconfig = new KafkaConfig();
-kafkaconfig.consume('transcode', (value) => {
-	console.log('got data from kafka : ', value);
+kafkaconfig.consume('transcode', async (message) => {
+	try {
+		console.log('Got data from Kafka:', message);
+
+		// Parsing JSON message value
+		const value = JSON.parse(message);
+
+		// Checking if value and filename exist
+		if (value && value.filename) {
+			console.log('Filename is', value.filename);
+			await s3ToS3(value.filename); // Make this change in controller
+		} else {
+			console.log("Didn't receive filename to be picked from S3");
+		}
+	} catch (error) {
+		console.error('Error processing Kafka message:', error);
+		// You might want to handle or log this error appropriately
+	}
 });
 
 app.listen(port, () => {

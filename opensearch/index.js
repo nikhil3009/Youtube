@@ -26,9 +26,6 @@ app.post('/upload', async (req, res) => {
 
 		var host =
 			'https://viewtube-search:Nikhil!7@search-viewtube-search-7x2t5xknagw6si2oixf7tfv3iy.us-east-2.es.amazonaws.com';
-		var host_aiven =
-			'https://avnadmin:AVNS_ByB7-ssBS4rc_XOzkP4@os-25088be6-hhldwitheducosys-5bb4.l.aivencloud.com:17386';
-
 		var client = new Client({
 			node: host,
 		});
