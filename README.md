@@ -139,8 +139,8 @@ This project demonstrates a simplified version of YouTube’s core functionaliti
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/nikhil3009/Youtube.git
+   cd Youtube
    ```
    Install Dependencies
 
